@@ -24,6 +24,10 @@ public class StateService {
         return stateRepository.findByName(nameState.toLowerCase(), pageRequest);
     }
 
+    public State findByUf(String ufState) {
+        return stateRepository.findByUfState(ufState.toLowerCase());
+    }
+
     public Page<State> findAll() {
         int page = 0;
         int size = 10;

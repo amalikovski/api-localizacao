@@ -15,7 +15,8 @@ import javax.persistence.*;
 public class Cep {
 
     @Id
-    private Long idIbgeCep;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long idCep;
 
     private String codeCep;
 
@@ -36,7 +37,7 @@ public class Cep {
     private String siafiCep;
 
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "id_ibge_city")
     private City city;
 

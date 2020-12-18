@@ -20,6 +20,8 @@ public class State {
 
     private String nameState;
 
+    private String ufState;
+
     @OneToMany(mappedBy = "state", cascade = CascadeType.ALL)
     private Set<City> cities;
 

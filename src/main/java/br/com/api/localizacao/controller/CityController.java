@@ -49,17 +49,9 @@ public class CityController {
 
     @ApiOperation("Api para buscar todas as cidades cadastradas por código do cep")
     @GetMapping("/findByCodeCep")
-    public Page<City> findByCodeCep(
-            @RequestParam("codeCep") String codeCep,
-            @RequestParam(
-                    value = "page",
-                    required = false,
-                    defaultValue = "0") int page,
-            @RequestParam(
-                    value = "size",
-                    required = false,
-                    defaultValue = "10") int size) {
-        return cityService.findByCep(codeCep, page, size);
+    public City findByCodeCep(
+            @RequestParam("codeCep") String codeCep) {
+        return cityService.findByCep(codeCep);
     }
 
     @ApiOperation("Api para buscar cidade por código do ibge")

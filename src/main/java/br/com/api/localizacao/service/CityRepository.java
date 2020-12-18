@@ -14,11 +14,10 @@ public interface CityRepository extends JpaRepository<City, Long> {
     @Query("FROM City c " +
             "WHERE LOWER(c.nameCity) like %:nameCity% ")
     Page<City> findByName(@Param("nameCity") String nameCity,
-                      Pageable pageable);
+                          Pageable pageable);
 
     @Query("FROM City c, Cep ce " +
-            "WHERE ce.codeCep = :codeCep ")
-    Page<City> findByCep(@Param("codeCep") String codeCep,
-                      Pageable pageable);
+            "WHERE ce.codeCep = :codeCep AND ce.codeCep <> null")
+    City findByCep(@Param("codeCep") String codeCep);
 
 }

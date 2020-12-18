@@ -14,5 +14,9 @@ public interface StateRepository extends JpaRepository<State, Long> {
     @Query("FROM State c " +
             "WHERE LOWER(c.nameState) like %:nameState% ")
     Page<State> findByName(@Param("nameState") String nameState,
-                             Pageable pageable);
+                           Pageable pageable);
+
+    @Query("FROM State c " +
+            "WHERE LOWER(c.ufState) like :ufState ")
+    State findByUfState(@Param("ufState") String ufState);
 }

@@ -19,9 +19,9 @@ public class CepService {
     @Autowired
     CepRepository cepRepository;
 
-    public Page<Cep> findByCodeCep(String nameCity, Integer page, Integer size) {
+    public Page<Cep> findByCodeCep(String codeCep, Integer page, Integer size) {
         PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC,"codeCep");
-        return cepRepository.findByCodeCep(nameCity.toLowerCase(), pageRequest);
+        return cepRepository.findByCodeCep(codeCep.toLowerCase(), pageRequest);
     }
 
     public Page<Cep> findAll() {
@@ -76,7 +76,6 @@ public class CepService {
                     cep.setGiaCep(newCep.getGiaCep());
                     cep.setDddCep(newCep.getDddCep());
                     cep.setSiafiCep(newCep.getSiafiCep());
-                    cep.setIdIbgeCep(newCep.getIdIbgeCep());
                     Cep cepUpdated = cepRepository.save(cep);
                     return ResponseEntity.ok().body(cepUpdated);
                 }).orElse(ResponseEntity.notFound().build());

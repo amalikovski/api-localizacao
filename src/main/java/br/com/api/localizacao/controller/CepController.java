@@ -30,7 +30,6 @@ public class CepController {
     @GetMapping
     public Page<Cep> getAll() {
         return cepService.findAll();
-
     }
 
     @ApiOperation("Api para busca de Cep por código")

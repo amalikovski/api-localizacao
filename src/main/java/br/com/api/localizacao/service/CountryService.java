@@ -19,9 +19,8 @@ public class CountryService {
     @Autowired
     CountryRepository countryRepository;
 
-    public Page<Country> findByName(String nameCountry, Integer page, Integer size) {
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC,"nameCountry");
-        return countryRepository.findByName(nameCountry.toLowerCase(), pageRequest);
+    public Optional<Country> findByName(String nameCountry) {
+        return countryRepository.findByNameCountryIgnoreCase(nameCountry);
     }
 
     public Page<Country> findAll() {

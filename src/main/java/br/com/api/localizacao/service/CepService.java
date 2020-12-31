@@ -19,9 +19,8 @@ public class CepService {
     @Autowired
     CepRepository cepRepository;
 
-    public Page<Cep> findByCodeCep(String codeCep, Integer page, Integer size) {
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC,"codeCep");
-        return cepRepository.findByCodeCep(codeCep.toLowerCase(), pageRequest);
+    public Optional<Cep> findByCodeCep(String codeCep) {
+        return cepRepository.findByCodeCep(codeCep);
     }
 
     public Page<Cep> findAll() {

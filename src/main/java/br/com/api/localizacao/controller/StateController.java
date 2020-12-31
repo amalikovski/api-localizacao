@@ -33,17 +33,9 @@ public class StateController {
 
     @ApiOperation("Api para buscar todos os estados cadastradas por nome")
     @GetMapping("/findByName")
-    public Page<State> findByName(
-            @RequestParam("nameState") String nameState,
-            @RequestParam(
-                    value = "page",
-                    required = false,
-                    defaultValue = "0") int page,
-            @RequestParam(
-                    value = "size",
-                    required = false,
-                    defaultValue = "10") int size) {
-        return stateService.findByName(nameState, page, size);
+    public Optional<State> findByName(
+            @RequestParam("nameState") String nameState) {
+        return stateService.findByName(nameState);
     }
 
     @ApiOperation("Api para busca de estado pelo código do ibge")

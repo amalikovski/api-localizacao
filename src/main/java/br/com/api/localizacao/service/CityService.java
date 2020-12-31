@@ -38,14 +38,13 @@ public class CityService {
     @Autowired
     private RestTemplate prepararRestTemplate;
 
-    public Page<City> findByName(String nameCity, Integer page, Integer size) {
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC, "nameCity");
-        return cityRepository.findByName(nameCity.toLowerCase(), pageRequest);
+    public Optional<City> findByName(String nameCity) {
+        return cityRepository.findByNameCityIgnoreCase(nameCity);
     }
 
     public City findByCep(String codeCep) {
         City city ;
-        Optional<Cep> optionalCep = cepService.findByCodeCep(codeCep, 0, 1).get().findFirst();
+        Optional<Cep> optionalCep = cepService.findByCodeCep(codeCep);
 
         if (optionalCep.isPresent()) {
             Cep cep = optionalCep.get();
@@ -214,14 +213,16 @@ public class CityService {
             if (cityRegistered.isPresent()) {
                 cityCep = cityRegistered.get();
             } else {
-                State state = stateService.findByUf(ufState);
-                if (state == null) {
+                Optional<State> state = stateService.findByUf(ufState);
+                if (state.isEmpty()) {
                     Long idIbgeState = Long.valueOf(String.valueOf(newCep.getLong("ibge")).substring(0, 2));
                     stateService.save(State.builder().idIbgeState(idIbgeState).ufState(ufState).country(Country.builder().idIbgeCountry(1058L).build()).build());
                     state = stateService.findByUf(ufState);
                 }
-                cityCep = City.builder().idIbgeCity(newCep.getLong("ibge")).nameCity(newCep.getString("localidade")).state(state).build();
-                cityRepository.save(cityCep);
+                if(state.isPresent()) {
+                    cityCep = City.builder().idIbgeCity(newCep.getLong("ibge")).nameCity(newCep.getString("localidade")).state(state.get()).build();
+                    cityRepository.save(cityCep);
+                }
             }
         } catch (JSONException e) {
             System.out.println("JSONException findAndRegisterNewCity() " + e);

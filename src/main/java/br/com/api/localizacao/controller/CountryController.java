@@ -33,17 +33,9 @@ public class CountryController {
 
     @ApiOperation("Api para buscar todos os países cadastradas por nome")
     @GetMapping("/findByName")
-    public Page<Country> findByName(
-            @RequestParam("nameCountry") String nameCountry,
-            @RequestParam(
-                    value = "page",
-                    required = false,
-                    defaultValue = "0") int page,
-            @RequestParam(
-                    value = "size",
-                    required = false,
-                    defaultValue = "10") int size) {
-        return countryService.findByName(nameCountry, page, size);
+    public Optional<Country> findByName(
+            @RequestParam("nameCountry") String nameCountry) {
+        return countryService.findByName(nameCountry);
     }
 
     @ApiOperation("Api para busca de pais pelo código do ibge")

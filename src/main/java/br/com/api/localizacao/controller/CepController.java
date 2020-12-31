@@ -34,17 +34,9 @@ public class CepController {
 
     @ApiOperation("Api para busca de Cep por código")
     @GetMapping("/findByCodeCep")
-    public Page<Cep> findByCodeCep(
-            @RequestParam("codeCep") String codeCep,
-            @RequestParam(
-                    value = "page",
-                    required = false,
-                    defaultValue = "0") int page,
-            @RequestParam(
-                    value = "size",
-                    required = false,
-                    defaultValue = "10") int size) {
-        return cepService.findByCodeCep(codeCep, page, size);
+    public Optional<Cep> findByCodeCep(
+            @RequestParam("codeCep") String codeCep) {
+        return cepService.findByCodeCep(codeCep);
     }
 
     @ApiOperation("Api para buscar um Cep pelo Id")

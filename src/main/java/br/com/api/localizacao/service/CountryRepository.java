@@ -8,11 +8,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface CountryRepository extends JpaRepository<Country, Long> {
 
-    @Query("FROM Country c " +
-            "WHERE LOWER(c.nameCountry) like %:nameCountry% ")
-    Page<Country> findByName(@Param("nameCountry") String nameCountry,
-                          Pageable pageable);
+    Optional<Country> findByNameCountryIgnoreCase(String nameCountry);
 }

@@ -8,13 +8,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface CityRepository extends JpaRepository<City, Long> {
 
-    @Query("FROM City c " +
-            "WHERE LOWER(c.nameCity) like %:nameCity% ")
-    Page<City> findByName(@Param("nameCity") String nameCity,
-                          Pageable pageable);
+    Optional<City> findByNameCityIgnoreCase(String nameCity);
 
     @Query("FROM City c, Cep ce " +
             "WHERE ce.codeCep = :codeCep AND ce.codeCep <> null")

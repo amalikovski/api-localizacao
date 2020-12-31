@@ -19,13 +19,12 @@ public class StateService {
     @Autowired
     StateRepository stateRepository;
 
-    public Page<State> findByName(String nameState, Integer page, Integer size) {
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC,"nameState");
-        return stateRepository.findByName(nameState.toLowerCase(), pageRequest);
+    public Optional<State> findByName(String nameState) {
+        return stateRepository.findByNameStateIgnoreCase(nameState);
     }
 
-    public State findByUf(String ufState) {
-        return stateRepository.findByUfState(ufState.toLowerCase());
+    public Optional<State> findByUf(String ufState) {
+        return stateRepository.findByUfStateIgnoreCase(ufState);
     }
 
     public Page<State> findAll() {
